@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Model;
 import Run.Run;
 import View.*;
 import View.WarningWindows.EndOfTheGameWindow;
@@ -9,30 +8,35 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import Model.CheckersRepository;
+
 public class Controller {
-    private Model model;
+    private CheckersRepository repository;
     private Board board;
     private MainFrame mainFrame;
     private Boolean[][] priorityBoard;
-    public Controller(Model model, MainFrame mainFrame){
-        this.model = model;
+    public Controller(CheckersRepository repository, MainFrame mainFrame){
+        this.repository = repository;
         this.mainFrame = mainFrame;
         this.board = mainFrame.getBoard();
-        priorityBoard = model.getPriorityBoard2(model.getSilverTile(), model.getBlackTile(), -1);
+        priorityBoard = repository.getPriorityBoard(repository.getSilverPawn(), repository.getBlackPawn(), -1);
         setInitialBoard();
     }
 
     private void setInitialBoard(){
-        for(int i = 0 ; i < model.getBoardSize() ; i++)
-            for(int j = 0 ; j < model.getBoardSize() ; j++){
+        Boolean[][] initialBoard = repository.getInitialBoard();
+        int boardSize = 8;
+        for(int i = 0; i < boardSize; i++)
+            for(int j = 0; j < boardSize; j++){
                 Pawn pawn;
-                if(model.getInitialBoard()[i][j]) {
+                if(initialBoard[i][j]) {
                     board.addTile(new Tile(SpecialColors.getTileBackgroundColor1(), SpecialColors.getTileHoverColor1(), i, j));
                 }
                 else {
                     board.addTile(new Tile(SpecialColors.getTileBackgroundColor2(), SpecialColors.getTileHoverColor2(), i, j));
                 }
-                if(model.getPawnBoard()[i][j] == model.getBlackTile()){
+                if(repository.getPawnBoard()[i][j] == repository.getBlackPawn()){
+
                     pawn = new BlackPawn(board, i, j);
                     pawn.addNewMouseListener(setMouseListener(
                         ()->{},
@@ -46,7 +50,7 @@ public class Controller {
                         ()->pawn.setCursor(Cursor.getDefaultCursor())));
                     board.getBoard()[i][j].addPawn(pawn);
                 }
-                else if(model.getPawnBoard()[i][j] == model.getSilverTile()){
+                else if(repository.getPawnBoard()[i][j] == repository.getSilverPawn()){
                     pawn = new SilverPawn(board, i, j);
                     pawn.addNewMouseListener(setMouseListener(
                         ()->{},
@@ -70,45 +74,45 @@ public class Controller {
             if(tile.getxCoordinate() == 7)
                 pawn.setPawnAsQueen();
             if(pawn.isQueen()) {
-                moveIndexes = model.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getSilverTile());
-                model.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = model.getBlackQueenTile();
+                moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn());
+                repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getBlackQueenPawn();
             }
             else {
-                moveIndexes = model.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getSilverTile(), 1);
-                model.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = model.getBlackTile();
+                moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn(), 1);
+                repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getBlackPawn();
             }
-            model.changeTurn(model.getSilverTile());
+            repository.changeTurn(repository.getSilverPawn());
             mainFrame.getLeftPanel().setColorPanelSilver();
         }
         else {
             if(tile.getxCoordinate() == 0)
                 pawn.setPawnAsQueen();
             if(pawn.isQueen()) {
-                moveIndexes = model.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getBlackTile());
-                model.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = model.getSilverQueenTile();
+                moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn());
+                repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getSilverQueenPawn();
             }
             else {
-                moveIndexes = model.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getBlackTile(), -1);
-                model.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = model.getSilverTile();
+                moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn(), -1);
+                repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getSilverPawn();
             }
-            model.changeTurn(model.getBlackTile());
+            repository.changeTurn(repository.getBlackPawn());
             mainFrame.getLeftPanel().setColorPanelBlack();
         }
         for(int i = 0; i < boardSize; i++)
             for(int j = 0; j < boardSize; j++)
                 if(board.getBoard()[i][j].getPawn()!=null)
-                    board.getBoard()[i][j].getPawn().setEnable(model.getTurnBoard()[i][j]);
+                    board.getBoard()[i][j].getPawn().setEnable(repository.getTurnBoard()[i][j]);
         tile.addPawn(pawn);
         pawn.setClicked(false);
 
         for(int i = 0; i < moveIndexes[1].length ; i+=2){
             if(moveIndexes[1][i]!=-1 && moveIndexes[1][i+1]!=-1){
                 board.getBoard()[moveIndexes[1][i]][moveIndexes[1][i+1]].removePawn();
-                model.getPawnBoard()[moveIndexes[1][i]][moveIndexes[1][i+1]] = model.getEmptyTile();
+                repository.getPawnBoard()[moveIndexes[1][i]][moveIndexes[1][i+1]] = repository.getEmptyPawn();
             }
         }
         board.getBoard()[pawn.getxCoordinate()][pawn.getyCoordinate()].removePawn();
-        model.getPawnBoard()[pawn.getxCoordinate()][pawn.getyCoordinate()] = model.getEmptyTile();
+        repository.getPawnBoard()[pawn.getxCoordinate()][pawn.getyCoordinate()] = repository.getEmptyPawn();
 
         pawn.setCoordinates(tile.getxCoordinate(), tile.getyCoordinate());
         for(int i = 0; i < moveIndexes[0].length ; i+=2){
@@ -118,11 +122,11 @@ public class Controller {
         }
         countPawns();
         if(pawn.getClass().isAssignableFrom(BlackPawn.class)){
-            priorityBoard = model.getPriorityBoard2(model.getSilverTile(), model.getBlackTile(), -1);
+            priorityBoard = repository.getPriorityBoard(repository.getSilverPawn(), repository.getBlackPawn(), -1);
 
         }
         else{
-            priorityBoard = model.getPriorityBoard2(model.getBlackTile(), model.getSilverTile(), 1);
+            priorityBoard = repository.getPriorityBoard(repository.getBlackPawn(), repository.getSilverPawn(), 1);
         }
     }
     private MouseListener setMouseListener(MyMouseListener mouseClicked, MyMouseListener mousePressed,MyMouseListener mouseReleased, MyMouseListener mouseEntered, MyMouseListener mouseExited){
@@ -158,16 +162,16 @@ public class Controller {
         if(pawn.isEnable() && priorityBoard[pawn.getxCoordinate()][pawn.getyCoordinate()]){
             if(pawn.getClass().isAssignableFrom(BlackPawn.class)){
                 if(pawn.isQueen()) {
-                    moveIndexes = model.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getSilverTile());
+                    moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn());
                 }
                 else
-                    moveIndexes = model.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getSilverTile(), 1);
+                    moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn(), 1);
             }
             else{
                 if(pawn.isQueen())
-                    moveIndexes = model.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getBlackTile());
+                    moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn());
                 else
-                    moveIndexes = model.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), model.getBlackTile(), -1);
+                    moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn(), -1);
             }
 
             if(areMoveIndexesDifferent(moveIndexes[0], pawn.getxCoordinate(), pawn.getyCoordinate())){

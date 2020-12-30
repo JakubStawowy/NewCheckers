@@ -1,14 +1,14 @@
 package Run;
 
 import Controller.Controller;
-import Model.Model;
+import Model.CheckersRepository;
 import View.MainFrame;
 
 public class Run {
     public static Run instance;
     MainFrame mainFrame = new MainFrame();
     public Run(){
-        new Controller(new Model(), mainFrame);
+        new Controller(new CheckersRepository(), mainFrame);
         mainFrame.pack();
     }
     public void newGame(){
