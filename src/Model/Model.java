@@ -7,19 +7,12 @@ public final class Model extends BoardLocator {
     private enum pawn{
         SILVER, BLACK, SILVERQUEEN, BLACKQUEEN, EMPTY
     }
-    private Boolean[][] initialBoard = new Boolean[boardSize][boardSize];
     private Boolean[][] turnBoard = new Boolean[boardSize][boardSize];
     private Boolean[][] priorityBoard = new Boolean[boardSize][boardSize];
     private pawn[][] pawnBoard = new pawn[boardSize][boardSize];
 
     public Model(){
-        setInitialBoard();
         setPawns();
-    }
-    private void setInitialBoard(){
-        for(int i = 0 ; i < boardSize ; i++)
-            for(int j = 0 ; j < boardSize ; j++)
-                initialBoard[i][j] = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1);
     }
     private void setPawns(){
         for(int i = 0 ; i < boardSize ; i++)
@@ -212,6 +205,10 @@ public final class Model extends BoardLocator {
         return moveIndexes;
     }
     public Boolean[][] getInitialBoard(){
+        Boolean[][] initialBoard = new Boolean[boardSize][boardSize];
+        for(int i = 0 ; i < boardSize ; i++)
+            for(int j = 0 ; j < boardSize ; j++)
+                initialBoard[i][j] = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1);
         return initialBoard;
     }
     public Boolean[][] getPriorityBoard2(final pawn color, final pawn enemyColor, final int direction){
