@@ -1,6 +1,6 @@
-package View.WarningWindows;
+package view.warningwindows;
 
-import View.MyButton;
+import view.MyButton;
 
 public class ExitGameWindow extends WarningWindow {
 

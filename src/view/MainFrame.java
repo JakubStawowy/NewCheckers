@@ -1,13 +1,15 @@
-package View;
+package view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
 
 public class MainFrame extends JFrame {
     private Board board;
     private LeftPanel leftPanel;
     public MainFrame(){
         board = new Board();
+        leftPanel = new LeftPanel();
         setTitle("Checkers");
         setLayout();
         setResizable(false);
@@ -17,7 +19,6 @@ public class MainFrame extends JFrame {
         getContentPane().setBackground(SpecialColors.getMainColor());
         setBackground(SpecialColors.getMainColor());
         JPanel mainPanel = new JPanel(new BorderLayout());
-        leftPanel = new LeftPanel();
         mainPanel.setBackground(SpecialColors.getMainColor());
         mainPanel.add(leftPanel, BorderLayout.WEST);
         mainPanel.add(board, BorderLayout.EAST);

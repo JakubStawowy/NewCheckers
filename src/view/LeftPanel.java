@@ -1,10 +1,15 @@
-package View;
+package view;
 
-import View.WarningWindows.ExitGameWindow;
-import View.WarningWindows.RestartGameWindow;
+import view.warningwindows.ExitGameWindow;
+import view.warningwindows.RestartGameWindow;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.Color;
 
 public class LeftPanel extends JPanel {
     private JPanel colorPanel;

@@ -1,14 +1,13 @@
-package Controller;
+package controller;
 
-import Run.Run;
-import View.*;
-import View.WarningWindows.EndOfTheGameWindow;
-
-import java.awt.*;
+import run.Run;
+import view.warningwindows.EndOfTheGameWindow;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import model.CheckersRepository;
+import view.*;
 
-import Model.CheckersRepository;
 
 public class Controller {
     private CheckersRepository repository;
@@ -29,6 +28,7 @@ public class Controller {
         for(int i = 0; i < boardSize; i++)
             for(int j = 0; j < boardSize; j++){
                 Pawn pawn;
+
                 if(initialBoard[i][j]) {
                     board.addTile(new Tile(SpecialColors.getTileBackgroundColor1(), SpecialColors.getTileHoverColor1(), i, j));
                 }
@@ -51,7 +51,7 @@ public class Controller {
                     board.getBoard()[i][j].addPawn(pawn);
                 }
                 else if(repository.getPawnBoard()[i][j] == repository.getSilverPawn()){
-                    pawn = new SilverPawn(board, i, j);
+                    pawn = new SilverPawn(i, j);
                     pawn.addNewMouseListener(setMouseListener(
                         ()->{},
                         ()->setPawn(pawn),

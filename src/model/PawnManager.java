@@ -1,9 +1,9 @@
-package Model;
+package model;
 
-public class PawnController {
+public class PawnManager {
     private final int boardSize = 8;
     private PawnNavigator pawnNavigator;
-    public PawnController(){
+    public PawnManager(){
         pawnNavigator = new PawnNavigator();
     }
     public Boolean[][] getPriorityBoard(final Pawn[][] pawnBoard, final Pawn color, final Pawn enemyColor, final int direction){

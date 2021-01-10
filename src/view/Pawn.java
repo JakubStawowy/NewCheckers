@@ -1,19 +1,19 @@
-package View;
+package view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.GridLayout;
+import java.awt.Color;
 import java.awt.event.MouseListener;
 
 public abstract class Pawn extends JPanel {
     protected int xCoordinate;
     protected int yCoordinate;
-    protected int previousXcoordinate = xCoordinate;
-    protected int previousYcoordinate = yCoordinate;
     protected Boolean clicked = false;
     protected Boolean enable = false;
     protected Boolean queenStatus = false;
     protected Color color;
-    protected Pawn(Board board, int xCoordinate, int yCoordinate){
+    protected Pawn(int xCoordinate, int yCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         setPawn();

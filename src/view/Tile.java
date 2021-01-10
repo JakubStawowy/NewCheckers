@@ -1,7 +1,11 @@
-package View;
+package view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.GridLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

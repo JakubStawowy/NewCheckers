@@ -1,15 +1,19 @@
-package View;
+package view;
 
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.MouseListener;
 
 public class Board extends JPanel{
 
-    private Tile[][] board = new Tile[8][8];
+    private Tile[][] board;
 
     public Board(){
+        board = new Tile[8][8];
         createLayout();
         setVisible(true);
     }

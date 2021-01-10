@@ -1,7 +1,7 @@
-package Model;
+package model;
 
 public class BoardInitiator {
-    final int boardSize = 8;
+    private final int boardSize = 8;
     public Boolean[][] getInitialBoard(){
         Boolean[][] initialBoard = new Boolean[boardSize][boardSize];
         for(int i = 0 ; i < boardSize ; i++)

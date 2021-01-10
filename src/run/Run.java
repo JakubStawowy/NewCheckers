@@ -1,8 +1,8 @@
-package Run;
+package run;
 
-import Controller.Controller;
-import Model.CheckersRepository;
-import View.MainFrame;
+import controller.Controller;
+import model.CheckersRepository;
+import view.MainFrame;
 
 public class Run {
     public static Run instance;

@@ -1,9 +1,15 @@
-package View.WarningWindows;
+package view.warningwindows;
 
-import View.SpecialColors;
+import view.SpecialColors;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 
 public abstract class WarningWindow extends JFrame {

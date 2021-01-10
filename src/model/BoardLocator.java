@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 abstract class BoardLocator{
     private final int boardSize = 7;

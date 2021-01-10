@@ -1,16 +1,16 @@
-package Model;
+package model;
 
 public class CheckersRepository {
 
     private Pawn[][] pawnBoard;
     private Boolean[][] turnBoard;
-    private PawnController pawnController;
+    private PawnManager pawnController;
     private PawnNavigator pawnNavigator;
     private BoardInitiator boardInitiator;
 
     public CheckersRepository(){
 
-        pawnController = new PawnController();
+        pawnController = new PawnManager();
         pawnNavigator = new PawnNavigator();
         boardInitiator = new BoardInitiator();
         pawnBoard = boardInitiator.getInitialPawnBoard();

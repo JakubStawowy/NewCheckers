@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-public enum Pawn {
+public enum  Pawn {
     SILVER,
     BLACK,
     SILVERQUEEN,

@@ -1,7 +1,7 @@
-package View.WarningWindows;
+package view.warningwindows;
 
 
-import View.MyButton;
+import view.MyButton;
 
 
 public class EndOfTheGameWindow extends WarningWindow{

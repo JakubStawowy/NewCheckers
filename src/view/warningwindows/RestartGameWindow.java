@@ -1,8 +1,8 @@
-package View.WarningWindows;
+package view.warningwindows;
 
 
-import Run.Run;
-import View.MyButton;
+import run.Run;
+import view.MyButton;
 
 public class RestartGameWindow extends WarningWindow {
 
