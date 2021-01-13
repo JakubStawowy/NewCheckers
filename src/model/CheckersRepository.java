@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public class CheckersRepository {
 
     private Pawn[][] pawnBoard;
@@ -56,5 +58,11 @@ public class CheckersRepository {
     }
     public Pawn getEmptyPawn(){
         return Pawn.EMPTY;
+    }
+    public void showPawnBoard(){
+        System.out.println("-------------------------------------------------------------");
+        for (int i = 0; i < 8; i++) {
+            System.out.println(Arrays.toString(pawnBoard[i]));
+        }
     }
 }

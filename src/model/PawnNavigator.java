@@ -15,124 +15,129 @@ public class PawnNavigator extends BoardLocator {
         else
             queen = Pawn.SILVERQUEEN;
         Pawn emptyColor = Pawn.EMPTY;
-        /*
-         * Po obu stronach pusto
-         * */
 
-        if(isOneStepLeft(xCoordinate, yCoordinate, direction) && isOneStepRight(xCoordinate, yCoordinate, direction) && pawnBoard[xd][yCoordinate-1] != enemyPawn && pawnBoard[xd][yCoordinate+1] != enemyPawn && pawnBoard[xd][yCoordinate-1] != queen && pawnBoard[xd][yCoordinate+1] != queen){
-
-            x1+=direction;
-            y1-=1;
-            x2+=direction;
-            y2+=1;
-        }
-        /*
-         * Po prawej stronie dwa pionki a po lewej pusto
-         * */
-        else if(isVerticallyOnBoard(xCoordinate, 2*direction) && ((yCoordinate == 6 && (pawnBoard[xd][yCoordinate+1] == enemyPawn || pawnBoard[xd][yCoordinate+1] == queen)) || (yCoordinate+2<=7 && yCoordinate-1>=0 && (pawnBoard[xd][yCoordinate+1] == enemyPawn || pawnBoard[xd][yCoordinate+1] == queen) && pawnBoard[x2d][yCoordinate+2] != emptyColor)) && pawnBoard[xd][yCoordinate-1] == emptyColor){
-
-            x1+=direction;
-            y1-=1;
-        }
-        /*
-         * Po lewej stronie dwa pionki a po prawej pusto
-         * */
-        else if(isVerticallyOnBoard(xCoordinate, direction) && ((yCoordinate == 1 && (pawnBoard[xd][yCoordinate-1] == enemyPawn || pawnBoard[xd][yCoordinate-1] == queen)) || (yCoordinate-2>=0 && yCoordinate+1<=7 && (pawnBoard[xd][yCoordinate-1] == enemyPawn || pawnBoard[xd][yCoordinate-1] == queen) && pawnBoard[x2d][yCoordinate-2] != emptyColor)) && pawnBoard[xd][yCoordinate+1] == emptyColor){
-
-            x1+=direction;
-            y1+=1;
-        }
-        /*
-         * pionek na prawej krawędzi
-         * */
-        else if(isVerticallyOnBoard(xCoordinate, direction) && yCoordinate == 0 && pawnBoard[xd][yCoordinate+1] == emptyColor){
-
-            x1+=direction;
-            y1+=1;
-        }
-        /*
-         * pionek na lewej krawędzi
-         * */
-        else if(isVerticallyOnBoard(xCoordinate, direction) && yCoordinate == 7 && pawnBoard[xd][yCoordinate-1] == emptyColor){
-
-            x1+=direction;
-            y1-=1;
-        }
-        /*
-         * po lewo przeciwnik
-         * */
-        else if(isTwoStepLeft(xCoordinate, yCoordinate, direction) && (pawnBoard[xd][yCoordinate-1] == enemyPawn || pawnBoard[xd][yCoordinate-1] == queen) && pawnBoard[x2d][yCoordinate - 2] == emptyColor){
-
+        try {
             /*
-             * Podwojne bicie zlamane lewo-prawo
+             * Po obu stronach pusto
              * */
-            if(isVerticallyOnBoard(xCoordinate, 4*direction) && (pawnBoard[x3d][yCoordinate - 1] == enemyPawn || pawnBoard[x3d][yCoordinate - 1] == queen) && pawnBoard[x4d][yCoordinate] == emptyColor){
 
-                x3+=4*direction;
-                xk1 = xCoordinate+direction;
-                xk2 = xCoordinate+3*direction;
-                yk1 = yCoordinate-1;
-                yk2 = yCoordinate-1;
+            if (isOneStepLeft(xCoordinate, yCoordinate, direction) && isOneStepRight(xCoordinate, yCoordinate, direction) && pawnBoard[xd][yCoordinate - 1] != enemyPawn && pawnBoard[xd][yCoordinate + 1] != enemyPawn && pawnBoard[xd][yCoordinate - 1] != queen && pawnBoard[xd][yCoordinate + 1] != queen) {
+
+                x1 += direction;
+                y1 -= 1;
+                x2 += direction;
+                y2 += 1;
             }
             /*
-             * Podwojne bicie proste w lewo
+             * Po prawej stronie dwa pionki a po lewej pusto
              * */
-            else if(isFourStepLeft(xCoordinate, yCoordinate, direction) && (pawnBoard[x3d][yCoordinate - 3] == enemyPawn || pawnBoard[x3d][yCoordinate - 3] == queen) && pawnBoard[x4d][yCoordinate-4] == emptyColor){
+            else if (isVerticallyOnBoard(xCoordinate, 2 * direction) && ((yCoordinate == 6 && (pawnBoard[xd][yCoordinate + 1] == enemyPawn || pawnBoard[xd][yCoordinate + 1] == queen)) || (yCoordinate + 2 <= 7 && yCoordinate - 1 >= 0 && (pawnBoard[xd][yCoordinate + 1] == enemyPawn || pawnBoard[xd][yCoordinate + 1] == queen) && pawnBoard[x2d][yCoordinate + 2] != emptyColor)) && pawnBoard[xd][yCoordinate - 1] == emptyColor) {
 
-                x3+=4*direction;
-                y3-=4;
-                xk1 = xCoordinate+direction;
-                xk2 = xCoordinate+3*direction;
-                yk1 = yCoordinate-1;
-                yk2 = yCoordinate-3;
+                x1 += direction;
+                y1 -= 1;
             }
             /*
-             * Bicie pojedyncze po lewej
+             * Po lewej stronie dwa pionki a po prawej pusto
              * */
-            else{
-                x1+=2*direction;
-                y1-=2;
-                xk1 = xCoordinate+direction;
-                yk1 = yCoordinate-1;
-            }
-        }
-        /*
-         * Po prawej przeciwnik
-         * */
-        else if(isTwoStepRight(xCoordinate, yCoordinate, direction) && (pawnBoard[xd][yCoordinate+1] == enemyPawn || pawnBoard[xd][yCoordinate+1] == queen) && pawnBoard[x2d][yCoordinate + 2] == emptyColor) {
+            else if (isVerticallyOnBoard(xCoordinate, direction) && ((yCoordinate == 1 && (pawnBoard[xd][yCoordinate - 1] == enemyPawn || pawnBoard[xd][yCoordinate - 1] == queen)) || (yCoordinate - 2 >= 0 && yCoordinate + 1 <= 7 && (pawnBoard[xd][yCoordinate - 1] == enemyPawn || pawnBoard[xd][yCoordinate - 1] == queen) && pawnBoard[x2d][yCoordinate - 2] != emptyColor)) && pawnBoard[xd][yCoordinate + 1] == emptyColor) {
 
-            /*
-             * Podwojne bicie zlamane prawo-lewo
-             * */
-            if (isVerticallyOnBoard(xCoordinate, 4*direction) && (pawnBoard[x3d][yCoordinate + 1] == enemyPawn || pawnBoard[x3d][yCoordinate + 1] == queen) && pawnBoard[x4d][yCoordinate] == emptyColor) {
-
-                x3 += 4 * direction;
-                xk1 = xCoordinate+direction;
-                xk2 = xCoordinate+3*direction;
-                yk1 = yCoordinate+1;
-                yk2 = yCoordinate+1;
+                x1 += direction;
+                y1 += 1;
             }
             /*
-             * Podwojne bicie proste w prawo
+             * pionek na prawej krawędzi
              * */
-            else if (isFourStepRight(xCoordinate, yCoordinate, direction) && (pawnBoard[x3d][yCoordinate + 3] == enemyPawn || pawnBoard[x3d][yCoordinate + 3] == queen) && pawnBoard[x4d][yCoordinate + 4] == emptyColor) {
+            else if (isVerticallyOnBoard(xCoordinate, direction) && yCoordinate == 0 && pawnBoard[xd][yCoordinate + 1] == emptyColor) {
 
-                x3 += 4 * direction;
-                y3 += 4;
-                xk1 = xCoordinate+direction;
-                xk2 = xCoordinate+3*direction;
-                yk1 = yCoordinate+1;
-                yk2 = yCoordinate+3;
+                x1 += direction;
+                y1 += 1;
             }
             /*
-             * Bicie pojedyncze w prawo
+             * pionek na lewej krawędzi
              * */
-            else {
-                x2 += 2 * direction;
-                y2 += 2;
-                xk1 = xCoordinate+direction;
-                yk1 = yCoordinate+1;
+            else if (isVerticallyOnBoard(xCoordinate, direction) && yCoordinate == 7 && pawnBoard[xd][yCoordinate - 1] == emptyColor) {
+
+                x1 += direction;
+                y1 -= 1;
             }
+            /*
+             * po lewo przeciwnik
+             * */
+            else if (isTwoStepLeft(xCoordinate, yCoordinate, direction) && (pawnBoard[xd][yCoordinate - 1] == enemyPawn || pawnBoard[xd][yCoordinate - 1] == queen) && pawnBoard[x2d][yCoordinate - 2] == emptyColor) {
+
+                /*
+                 * Podwojne bicie zlamane lewo-prawo
+                 * */
+                if (isVerticallyOnBoard(xCoordinate, 4 * direction) && (pawnBoard[x3d][yCoordinate - 1] == enemyPawn || pawnBoard[x3d][yCoordinate - 1] == queen) && pawnBoard[x4d][yCoordinate] == emptyColor) {
+
+                    x3 += 4 * direction;
+                    xk1 = xCoordinate + direction;
+                    xk2 = xCoordinate + 3 * direction;
+                    yk1 = yCoordinate - 1;
+                    yk2 = yCoordinate - 1;
+                }
+                /*
+                 * Podwojne bicie proste w lewo
+                 * */
+                else if (isFourStepLeft(xCoordinate, yCoordinate, direction) && (pawnBoard[x3d][yCoordinate - 3] == enemyPawn || pawnBoard[x3d][yCoordinate - 3] == queen) && pawnBoard[x4d][yCoordinate - 4] == emptyColor) {
+
+                    x3 += 4 * direction;
+                    y3 -= 4;
+                    xk1 = xCoordinate + direction;
+                    xk2 = xCoordinate + 3 * direction;
+                    yk1 = yCoordinate - 1;
+                    yk2 = yCoordinate - 3;
+                }
+                /*
+                 * Bicie pojedyncze po lewej
+                 * */
+                else {
+                    x1 += 2 * direction;
+                    y1 -= 2;
+                    xk1 = xCoordinate + direction;
+                    yk1 = yCoordinate - 1;
+                }
+            }
+            /*
+             * Po prawej przeciwnik
+             * */
+            else if (isTwoStepRight(xCoordinate, yCoordinate, direction) && (pawnBoard[xd][yCoordinate + 1] == enemyPawn || pawnBoard[xd][yCoordinate + 1] == queen) && pawnBoard[x2d][yCoordinate + 2] == emptyColor) {
+
+                /*
+                 * Podwojne bicie zlamane prawo-lewo
+                 * */
+                if (isVerticallyOnBoard(xCoordinate, 4 * direction) && (pawnBoard[x3d][yCoordinate + 1] == enemyPawn || pawnBoard[x3d][yCoordinate + 1] == queen) && pawnBoard[x4d][yCoordinate] == emptyColor) {
+
+                    x3 += 4 * direction;
+                    xk1 = xCoordinate + direction;
+                    xk2 = xCoordinate + 3 * direction;
+                    yk1 = yCoordinate + 1;
+                    yk2 = yCoordinate + 1;
+                }
+                /*
+                 * Podwojne bicie proste w prawo
+                 * */
+                else if (isFourStepRight(xCoordinate, yCoordinate, direction) && (pawnBoard[x3d][yCoordinate + 3] == enemyPawn || pawnBoard[x3d][yCoordinate + 3] == queen) && pawnBoard[x4d][yCoordinate + 4] == emptyColor) {
+
+                    x3 += 4 * direction;
+                    y3 += 4;
+                    xk1 = xCoordinate + direction;
+                    xk2 = xCoordinate + 3 * direction;
+                    yk1 = yCoordinate + 1;
+                    yk2 = yCoordinate + 3;
+                }
+                /*
+                 * Bicie pojedyncze w prawo
+                 * */
+                else {
+                    x2 += 2 * direction;
+                    y2 += 2;
+                    xk1 = xCoordinate + direction;
+                    yk1 = yCoordinate + 1;
+                }
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array Index exception: "+e.getMessage());
         }
         return new int[][]{{x1, y1, x2, y2, x3, y3}, {xk1, yk1, xk2, yk2, -1, -1}};
     }

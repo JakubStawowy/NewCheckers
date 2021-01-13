@@ -8,10 +8,18 @@ public class PawnManager {
     }
     public Boolean[][] getPriorityBoard(final Pawn[][] pawnBoard, final Pawn color, final Pawn enemyColor, final int direction){
         Boolean[][] priorityBoard = new Boolean[boardSize][boardSize];
+        Pawn queenColor;
+
+        if(color == Pawn.SILVER)
+            queenColor = Pawn.SILVERQUEEN;
+        else
+            queenColor = Pawn.BLACKQUEEN;
+
         boolean attack = false;
+
         for(int i = 0 ; i < pawnBoard.length ; i++)
             for(int j = 0 ; j < pawnBoard[i].length ; j++)
-                priorityBoard[i][j] = pawnBoard[i][j] != enemyColor && pawnBoard[i][j] != Pawn.EMPTY;
+                priorityBoard[i][j] = pawnBoard[i][j] == queenColor || (pawnBoard[i][j] != enemyColor && pawnBoard[i][j] != Pawn.EMPTY);
 
         for(int i = 0 ; i < pawnBoard.length ; i++)
             for (int j = 0; j < pawnBoard[i].length; j++){
@@ -28,7 +36,7 @@ public class PawnManager {
                                 priorityBoard[i][j] = false;
                         }
                     }
-                    else if(pawnBoard[i][j] == Pawn.BLACKQUEEN || pawnBoard[i][j] == Pawn.SILVERQUEEN){
+                    else if(pawnBoard[i][j] == queenColor){
                         int[][] moveIndexes = pawnNavigator.getQueenMoveIndexes(pawnBoard, i, j,enemyColor);
                         for (int k = 0; k < moveIndexes[1].length; k++) {
                             if(moveIndexes[1][k] != -1){

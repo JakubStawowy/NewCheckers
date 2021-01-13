@@ -5,6 +5,8 @@ import view.warningwindows.EndOfTheGameWindow;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
+
 import model.CheckersRepository;
 import view.*;
 
@@ -71,8 +73,6 @@ public class Controller {
         final int boardSize = 8;
 
         if(pawn.getClass().isAssignableFrom(BlackPawn.class)) {
-            if(tile.getxCoordinate() == 7)
-                pawn.setPawnAsQueen();
             if(pawn.isQueen()) {
                 moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn());
                 repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getBlackQueenPawn();
@@ -80,13 +80,15 @@ public class Controller {
             else {
                 moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getSilverPawn(), 1);
                 repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getBlackPawn();
+                if(tile.getxCoordinate() == 7 && !pawn.isQueen()){
+                    repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getBlackQueenPawn();
+                    pawn.setPawnAsQueen();
+                }
             }
             repository.changeTurn(repository.getSilverPawn());
             mainFrame.getLeftPanel().setColorPanelSilver();
         }
         else {
-            if(tile.getxCoordinate() == 0)
-                pawn.setPawnAsQueen();
             if(pawn.isQueen()) {
                 moveIndexes = repository.getQueenMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn());
                 repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getSilverQueenPawn();
@@ -94,6 +96,10 @@ public class Controller {
             else {
                 moveIndexes = repository.getMoveIndexes(pawn.getxCoordinate(), pawn.getyCoordinate(), repository.getBlackPawn(), -1);
                 repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getSilverPawn();
+                if(tile.getxCoordinate() == 0 && !pawn.isQueen()){
+                    pawn.setPawnAsQueen();
+                    repository.getPawnBoard()[tile.getxCoordinate()][tile.getyCoordinate()] = repository.getSilverQueenPawn();
+                }
             }
             repository.changeTurn(repository.getBlackPawn());
             mainFrame.getLeftPanel().setColorPanelBlack();
